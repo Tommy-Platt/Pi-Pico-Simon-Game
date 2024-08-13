@@ -11,6 +11,8 @@ class Game:
     def __init__(self):
         self.hw = Hardware() # container for hardware functionality
         self.gameStarted = False
+        self.score = 0
+        self.colourSequence = []
 
     def clearScreen(self): # Clears screen
         os.system('cls')
@@ -37,9 +39,9 @@ class Game:
                 ledGreen.off()
                 self.gameStarted = True
 
-    # Code for generating the colour sequence
-    #----------------------------------------
-    # Define the score variable in the __init__ function
-    # Randomly select a colour (randomColour) from colourList (in hardware)
-    # Add the selected colour to a new list (colourSequence)
-    # Print colourSequence in the terminal + what the list means so we can test how it works
+    # Code for generating the colour sequence    
+    def addColours(self):
+        randomColour = random.choice(colourList)
+        self.colourSequence.append(randomColour)
+        print("Simon Says: " + str(self.colourSequence))
+        #Add part for showing colours in sequence on LEDs

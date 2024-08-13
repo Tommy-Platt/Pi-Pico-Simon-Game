@@ -8,3 +8,6 @@ game = Game()
 game.startupEffects() # Plays the startup sequence
 
 # Start the function for beginning the colour sequence
+game.addColours()
+game.addColours()
+game.addColours()
