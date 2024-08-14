@@ -7,7 +7,7 @@ game = Game()
 
 game.startupEffects() # Plays the startup sequence
 
-# Start the function for beginning the colour sequence
+# Plays Simon's sequence of colours 3 times e.g. 1, 1 2, 1 2 3
 game.addColours()
 game.addColours()
 game.addColours()

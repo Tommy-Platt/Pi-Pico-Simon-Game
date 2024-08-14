@@ -15,10 +15,10 @@ A4 = 440
 soundList = (G2, C2, E3, C4S, E4, A4)
 
 # Assigns notes for each colour in the game
-NOTE_YELLOW = C4S
-NOTE_BLUE = E4
-NOTE_RED = A4
-NOTE_GREEN = E3
+noteYellow = C4S
+noteBlue = E4
+noteRed = A4
+noteGreen = E3
 
 # GPIO pin numbers for LEDs, buttons and passive buzzer.
 ledRed = Pin(10, Pin.OUT)
@@ -46,8 +46,13 @@ colourList = [GREEN, YELLOW, BLUE, RED]
 # Class that contains all of the functionality of the hardware e.g. playing noise
 class Hardware:
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        # Creates a dictionary for each colour's button, LED and note
+        self.components = {}
+        self.components['blue'] = (buttonBlue, ledBlue, noteBlue)
+        self.components['yellow'] = (buttonYellow, ledYellow, noteYellow)
+        self.components['red'] = (buttonRed, ledRed, noteRed)
+        self.components['green'] = (buttonGreen, ledGreen, noteGreen)
 
     # Plays a set note for a set duration
     def playSound(self, note, duration):
@@ -56,3 +61,18 @@ class Hardware:
         sleep(duration)
         piezo.duty_u16(0)
         sleep(duration)
+
+    # Lights an LED from the components dictionary
+    def lightLed(self, colour, state):
+
+        led = self.components[colour]
+        led[1].value(state)
+
+    # Plays a colour and its corresponding note for a set duration
+    def playColour(self, colour, duration):
+        
+        self.lightLed(colour, True)
+        note = self.components[colour]
+        self.playSound(note[2], duration)
+        self.lightLed(colour, False)
+        sleep(0.2)

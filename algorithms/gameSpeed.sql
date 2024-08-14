@@ -4,11 +4,13 @@ BEGIN gameSpeed ()
     speed = ((-0.5 * level) + 2)
     sequenceLength = level + 1
     
-    IF sequenceLength < 9:
+    IF sequenceLength < 9 THEN
         level = 1
-    ELIF sequenceLength >= 10:
+    ELSE IF sequenceLength >= 10 THEN
         level = 2
-    ELIF sequenceLength > 24:
+    ELSE IF sequenceLength > 24 THEN
         level = 3
     
+    END IF
+
 END

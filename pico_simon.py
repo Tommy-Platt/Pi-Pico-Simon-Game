@@ -13,6 +13,7 @@ class Game:
         self.gameStarted = False
         self.score = 0
         self.colourSequence = []
+        self.speed = 0.6
 
     def clearScreen(self): # Clears screen
         os.system('cls')
@@ -22,19 +23,19 @@ class Game:
         while self.gameStarted == False:
             if buttonReset.value() == True:
                 ledRed.on()
-                self.hw.playSound(NOTE_RED, 0.5)
+                self.hw.playSound(noteRed, 0.5)
                 sleep(0.1)
                 ledRed.off()
                 ledBlue.on()
-                self.hw.playSound(NOTE_BLUE, 0.5)
+                self.hw.playSound(noteBlue, 0.5)
                 sleep(0.1)
                 ledBlue.off()
                 ledYellow.on()
-                self.hw.playSound(NOTE_YELLOW, 0.5)
+                self.hw.playSound(noteYellow, 0.5)
                 sleep(0.1)
                 ledYellow.off()
                 ledGreen.on()
-                self.hw.playSound(NOTE_GREEN, 0.5)
+                self.hw.playSound(noteGreen, 0.5)
                 sleep(0.1)
                 ledGreen.off()
                 self.gameStarted = True
@@ -43,5 +44,17 @@ class Game:
     def addColours(self):
         randomColour = random.choice(colourList)
         self.colourSequence.append(randomColour)
+
+        self.score = len(self.colourSequence) # Score = length of Simon's sequence
+        
+        # For every 5 rounds, decrease the speed if speed > 0.1
+        if len(self.colourSequence) % 5 == 0:
+        
+            if self.speed > 0.1:
+                self.speed -= 0.1
+
+        # Plays the note and flashes the LED for every colour in Simon's sequence
+        for i in self.colourSequence:
+            self.hw.playColour(i, self.speed)
+
         print("Simon Says: " + str(self.colourSequence))
-        #Add part for showing colours in sequence on LEDs
