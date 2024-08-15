@@ -76,3 +76,19 @@ class Hardware:
         self.playSound(note[2], duration)
         self.lightLed(colour, False)
         sleep(0.2)
+        
+    def getButtonPress(self):
+        
+        while True:
+            for c in colourList:
+                buttonValue = self.components[c][0].value()
+                
+                if (buttonValue == False):
+                    return c
+            
+            buttonValue = buttonReset.value()
+            
+            if (buttonValue == True):
+                return None
+            
+            sleep(0.1)
