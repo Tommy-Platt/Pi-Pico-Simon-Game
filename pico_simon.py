@@ -61,32 +61,39 @@ class Game:
         
     # The function containing the gameplay loop
     def playSimon(self):
-        
+
         # Resets speed and colourSequence
         self.colourSequence.clear()
         self.speed = 0.6
         
-        self.addColours() # Beging the sequence
+        self.addColours() # Begins the sequence
         
         # Loop for adding colours to the sequence
-        while (self.checkColours() is True):
+        while (self.checkColours() == True):
             sleep(1)
             self.addColours()
             
-        # Fail sequence
+        # Fail sequence to be added
     
     # Checks if the user's button presses equal Simon's sequence
     def checkColours(self):
         
-        sequenceCorrect = True
+        sequenceCorrect = True # Has the user repeated the sequence
         
+        # Loops for every colour in the sequence so far
         for c in self.colourSequence:
+            sleep(0.3)
             userColour = self.hw.getButtonPress()
             
-            if (userColour is None):
+            print("You say: " + str(userColour))
+            
+            # Waits for the user to press a button
+            if (userColour == None):
                 self.playSimon()
             
-            self.hw.playColour(userColour, 0.2)
+            self.hw.playColour(userColour, 0.5) # Lights up the user's colour
+            
+            # Ends the gameplay loop if the user does not repeat the sequence correctly
             if (userColour != c):
                 sequenceCorrect = False
                 break

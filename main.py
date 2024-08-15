@@ -7,4 +7,5 @@ game = Game()
 
 game.startupEffects() # Plays the startup sequence
 
+# Runs the gameplay loop
 game.playSimon()

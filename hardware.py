@@ -77,18 +77,17 @@ class Hardware:
         self.lightLed(colour, False)
         sleep(0.2)
         
+    # Gets a button press from the user
     def getButtonPress(self):
         
+        # Loops through the available colours and checks if each one has been pressed. Returns the pressed colour
         while True:
             for c in colourList:
                 buttonValue = self.components[c][0].value()
                 
-                if (buttonValue == False):
+                if (buttonValue == 1):
                     return c
             
             buttonValue = buttonReset.value()
-            
-            if (buttonValue == True):
-                return None
             
             sleep(0.1)
