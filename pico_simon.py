@@ -48,7 +48,7 @@ class Game:
         self.score = len(self.colourSequence) # Score = length of Simon's sequence
         
         # For every 5 rounds, decrease the speed if speed > 0.1
-        if len(self.colourSequence) % 5 == 0:
+        if len(self.colourSequence) % 4 == 0:
         
             if self.speed > 0.1:
                 self.speed -= 0.1
@@ -62,6 +62,8 @@ class Game:
     # The function containing the gameplay loop
     def playSimon(self):
 
+        self.startupEffects()
+
         # Resets speed and colourSequence
         self.colourSequence.clear()
         self.speed = 0.6
@@ -70,11 +72,18 @@ class Game:
         
         # Loop for adding colours to the sequence
         while (self.checkColours() == True):
-            sleep(1)
+            sleep(0.3)
+            #self.clearScreen() - currently not working
             self.addColours()
+
+        # Fail sequence plays if user fails the sequence
+        else:    
+            self.failSequence()
+
+            self.gameStarted = False
             
-        # Fail sequence to be added
-    
+            self.playSimon()
+                    
     # Checks if the user's button presses equal Simon's sequence
     def checkColours(self):
         
@@ -82,7 +91,7 @@ class Game:
         
         # Loops for every colour in the sequence so far
         for c in self.colourSequence:
-            sleep(0.3)
+            sleep(0.1)
             userColour = self.hw.getButtonPress()
             
             print("You say: " + str(userColour))
@@ -99,3 +108,23 @@ class Game:
                 break
             
         return sequenceCorrect
+    
+    def failSequence(self):
+        
+        sleep(0.5)
+
+        for c in colourList:
+            self.hw.lightLed(c, True)
+
+        self.hw.playSound(G2, 0.25)
+        self.hw.playSound(C2, 0.5)
+
+        sleep(0.5)
+
+        for c in colourList:
+            self.hw.lightLed(c, False)
+
+        print("Incorrect! Simon said: " + str(self.colourSequence))
+        
+        for i in self.colourSequence:
+            self.hw.playColour(i, self.speed)

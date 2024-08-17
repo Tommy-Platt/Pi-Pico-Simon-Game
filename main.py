@@ -5,7 +5,5 @@ from hardware import *
 # Instantiates the game object from the Game class
 game = Game()
 
-game.startupEffects() # Plays the startup sequence
-
 # Runs the gameplay loop
 game.playSimon()
