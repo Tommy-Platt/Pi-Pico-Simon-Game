@@ -10,6 +10,7 @@ E3 = 165
 C4S = 277 
 E4 = 330 
 A4 = 440 
+G4 = 392
 
 #List of sounds that can be used
 soundList = (G2, C2, E3, C4S, E4, A4)

@@ -44,8 +44,6 @@ class Game:
     def addColours(self):
         randomColour = random.choice(colourList)
         self.colourSequence.append(randomColour)
-
-        self.score = len(self.colourSequence) # Score = length of Simon's sequence
         
         # For every 5 rounds, decrease the speed if speed > 0.1
         if len(self.colourSequence) % 4 == 0:
@@ -72,6 +70,8 @@ class Game:
         
         # Loop for adding colours to the sequence
         while (self.checkColours() == True):
+
+            self.score = len(self.colourSequence) # Score = length of Simon's sequence if user's matches
             sleep(0.3)
             #self.clearScreen() - currently not working
             self.addColours()
@@ -109,6 +109,7 @@ class Game:
             
         return sequenceCorrect
     
+    # Plays a lightshow for when the user fails
     def failSequence(self):
         
         sleep(0.5)
@@ -116,15 +117,36 @@ class Game:
         for c in colourList:
             self.hw.lightLed(c, True)
 
-        self.hw.playSound(G2, 0.25)
-        self.hw.playSound(C2, 0.5)
+        self.hw.playSound(G2, 0.25) # Fail notes
+        self.hw.playSound(C2, 0.5) # -----------
 
         sleep(0.5)
 
         for c in colourList:
             self.hw.lightLed(c, False)
 
-        print("Incorrect! Simon said: " + str(self.colourSequence))
+        print("Incorrect! Simon said: " + str(self.colourSequence)) #Print's correct sequence
         
+        # Lights up the LEDs
         for i in self.colourSequence:
             self.hw.playColour(i, self.speed)
+
+        sleep(1)
+
+        self.hw.playSound(C2, 0.5) # Score display notification sounds
+        self.hw.playSound(E3, 0.5) # --------------------------------
+        self.hw.playSound(G4, 0.5) # --------------------------------
+
+        self.scoreOnes = self.score % 10 # Gets the one's place of the score
+        self.scoreTens = (self.score // 10) % 10 # Gets the tens's place of the score
+        
+        sleep(1)
+
+        print("Your score was: " + str(self.score))
+
+        # Displays the score as green & yellow flashes corresponding to the digits of the number
+        for o in range(self.scoreOnes):
+            self.hw.playColour(GREEN, 0.2)
+
+        for t in range(self.scoreTens):
+            self.hw.playColour(YELLOW, 0.2)
