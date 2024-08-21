@@ -13,7 +13,7 @@ A4 = 440
 G4 = 392
 
 #List of sounds that can be used
-soundList = (G2, C2, E3, C4S, E4, A4)
+soundList = (G2, C2, E3, C4S, E4, A4, G4)
 
 # Assigns notes for each colour in the game
 noteYellow = C4S
@@ -88,6 +88,7 @@ class Hardware:
                 
                 if (buttonValue == 1):
                     return c
+                    print(f"Pressed {c}")
             
             buttonValue = buttonReset.value()
             

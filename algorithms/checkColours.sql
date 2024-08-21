@@ -1,13 +1,18 @@
 BEGIN checkColours ()
 
-        FOR c IN colourSequence:
-            IF userColour == NONE
-                CALL playSimon
+    sequenceCorrect = True
 
-            playColour(note, duration, led)
+    FOR c IN colourSequence:
+
+        GET userColour
+
+        IF userColour == NONE
+            CALL playSimon -- Continues playing game (this function will repeat eventually)
+
+        playColour(userColour, 0.5)
             
-            IF userSequence NOT IN colourSequence
-                sequenceCorrect = False
-                BREAK
+        IF userColour NOT IN colourSequence
+            sequenceCorrect = False
+            BREAK
         
 END checkColours()
