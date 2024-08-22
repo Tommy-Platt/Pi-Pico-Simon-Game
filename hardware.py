@@ -86,9 +86,9 @@ class Hardware:
             for c in colourList:
                 buttonValue = self.components[c][0].value()
                 
-                if (buttonValue == 1):
+                if (buttonValue == 1):         
+                    print("You say: " + c)
                     return c
-                    print(f"Pressed {c}")
             
             buttonValue = buttonReset.value()
             

@@ -14,9 +14,6 @@ class Game:
         self.score = 0
         self.colourSequence = []
         self.speed = 0.6
-
-    def clearScreen(self): # Clears screen
-        os.system('cls')
     
     # Plays an introductory sequence of colours and sounds when the start button is pressed
     def startupEffects(self):
@@ -38,6 +35,7 @@ class Game:
                 self.hw.playSound(noteGreen, 0.5)
                 sleep(0.1)
                 ledGreen.off()
+                sleep(1)
                 self.gameStarted = True
 
     # Code for generating the colour sequence    
@@ -65,6 +63,7 @@ class Game:
         # Resets speed and colourSequence
         self.colourSequence.clear()
         self.speed = 0.6
+        self.score = 0
         
         self.addColours() # Begins the sequence
         
@@ -73,7 +72,7 @@ class Game:
 
             self.score = len(self.colourSequence) # Score = length of Simon's sequence if user's matches
             sleep(0.3)
-            #self.clearScreen() - currently not working
+            print("\033c")
             self.addColours()
 
         # Fail sequence plays if user fails the sequence
@@ -93,8 +92,6 @@ class Game:
         for c in self.colourSequence:
             sleep(0.1)
             userColour = self.hw.getButtonPress()
-            
-            print("You say: " + str(userColour))
             
             # Waits for the user to press a button
             if (userColour == None):
