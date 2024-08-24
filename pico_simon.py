@@ -4,16 +4,15 @@ from time import sleep
 from hardware import *
 import random, os
 
+# Class containing function related to gameplay functionality e.g. checking user input
 class Game:
 
-    # Space for variables
-
     def __init__(self):
-        self.hw = Hardware() # container for hardware functionality
-        self.gameStarted = False
-        self.score = 0
-        self.colourSequence = []
-        self.speed = 0.6
+        self.hw = Hardware() # Container for hardware functionality
+        self.gameStarted = False # Boolean checker for if the game is running
+        self.score = 0 # User score
+        self.colourSequence = [] # List variable for Simon's colour sequence
+        self.speed = 0.6 # Speed of the game
     
     # Plays an introductory sequence of colours and sounds when the start button is pressed
     def startupEffects(self):
@@ -57,10 +56,10 @@ class Game:
         
     # The function containing the gameplay loop
     def playSimon(self):
-
+        # Plays the startup effects before the game continues
         self.startupEffects()
 
-        # Resets speed and colourSequence
+        # Resets variables for the game upon starting
         self.colourSequence.clear()
         self.speed = 0.6
         self.score = 0
@@ -69,29 +68,26 @@ class Game:
         
         # Loop for adding colours to the sequence
         while (self.checkColours() == True):
-
             self.score = len(self.colourSequence) # Score = length of Simon's sequence if user's matches
             sleep(0.3)
-            print("\033c")
+            print("\033c") # Clears screen
             self.addColours()
 
-        # Fail sequence plays if user fails the sequence
+        # Fail sequence plays if user fails the sequence, allows game to restart
         else:    
             self.failSequence()
-
             self.gameStarted = False
-            
             self.playSimon()
                     
     # Checks if the user's button presses equal Simon's sequence
     def checkColours(self):
-        
-        sequenceCorrect = True # Has the user repeated the sequence
+
+        sequenceCorrect = True # Has the user repeated the sequence?
         
         # Loops for every colour in the sequence so far
         for c in self.colourSequence:
             sleep(0.1)
-            userColour = self.hw.getButtonPress()
+            userColour = self.hw.getButtonPress() # Gets user's input for each colour in the sequence
             
             # Waits for the user to press a button
             if (userColour == None):
@@ -122,24 +118,24 @@ class Game:
         for c in colourList:
             self.hw.lightLed(c, False)
 
-        print("Incorrect! Simon said: " + str(self.colourSequence)) #Print's correct sequence
+        print("Incorrect! Simon said: " + str(self.colourSequence)) # Print's correct sequence
         
-        # Lights up the LEDs
+        # Lights up the LEDs for correct sequence
         for i in self.colourSequence:
             self.hw.playColour(i, self.speed)
 
         sleep(1)
 
-        self.hw.playSound(C2, 0.5) # Score display notification sounds
-        self.hw.playSound(E3, 0.5) # --------------------------------
-        self.hw.playSound(G4, 0.5) # --------------------------------
+        self.hw.playSound(C2, 0.5) # Sounds notify user that the score will now display
+        self.hw.playSound(E3, 0.5) # --------------------------------------------------
+        self.hw.playSound(G4, 0.5) # --------------------------------------------------
 
         self.scoreOnes = self.score % 10 # Gets the one's place of the score
         self.scoreTens = (self.score // 10) % 10 # Gets the tens's place of the score
         
         sleep(1)
 
-        print("Your score was: " + str(self.score))
+        print("Your score was: " + str(self.score)) # Displays score in terminal
 
         # Displays the score as green & yellow flashes corresponding to the digits of the number
         for o in range(self.scoreOnes):

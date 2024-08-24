@@ -21,7 +21,7 @@ noteBlue = E4
 noteRed = A4
 noteGreen = E3
 
-# GPIO pin numbers for LEDs, buttons and passive buzzer.
+# Assigns variable names for LED, Button & Piezo pins
 ledRed = Pin(10, Pin.OUT)
 ledBlue = Pin(11, Pin.OUT)
 ledYellow = Pin(12, Pin.OUT)
@@ -41,7 +41,7 @@ GREEN = 'green'
 RED = 'red'
 YELLOW = 'yellow'
 
-# Array of all colours.
+# List of all LED colours
 colourList = [GREEN, YELLOW, BLUE, RED]
 
 # Class that contains all of the functionality of the hardware e.g. playing noise
@@ -65,13 +65,11 @@ class Hardware:
 
     # Lights an LED from the components dictionary
     def lightLed(self, colour, state):
-
         led = self.components[colour]
         led[1].value(state)
 
     # Plays a colour and its corresponding note for a set duration
     def playColour(self, colour, duration):
-        
         self.lightLed(colour, True)
         note = self.components[colour]
         self.playSound(note[2], duration)
@@ -80,9 +78,8 @@ class Hardware:
         
     # Gets a button press from the user
     def getButtonPress(self):
-        
-        # Loops through the available colours and checks if each one has been pressed. Returns the pressed colour
         while True:
+            # Loops through the available colours and checks if each one has been pressed. Returns the pressed colour
             for c in colourList:
                 buttonValue = self.components[c][0].value()
                 

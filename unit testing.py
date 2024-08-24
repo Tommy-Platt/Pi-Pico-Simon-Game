@@ -28,7 +28,7 @@ print("\naddColours complete\n")
 
 # Checks if it can detect if the colour press is correct (will respond incorrect due to addColours being called before and messing with the sequence)
 print("Checking colours")
-game.score = 11 # Sets a 'fake' score to test if 1's and 10's display on the LED
+game.score = 22 # Sets a 'fake' score to test if 1's and 10's display on the LED
 game.checkColours()
 
 sleep(2)
